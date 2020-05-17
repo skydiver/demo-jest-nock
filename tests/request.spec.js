@@ -1,22 +1,34 @@
 const nock = require('nock');
-const request = require('../request');
+const { requestUsers, requestPosts } = require('../request');
 
-const sampleData = require('../sampleData.json');
+const logRequest = require('./nock-save-to-file');
 
-nock('https://jsonplaceholder.typicode.com')
-  .get('/users')
-  .reply(200, sampleData)
-  .persist();
+nock.recorder.rec({
+  output_objects: true,
+  logging: logRequest,
+  use_separator: false,
+});
+
+// nock('https://jsonplaceholder.typicode.com')
+//   .get('/users')
+//   .reply(200, sampleData)
+//   .persist();
 
 describe('testing using nock', () => {
   test('test users endpoint', async () => {
-    const response = await request();
+    const response = await requestUsers();
     expect(typeof response).toBe('object');
     expect(response.length).toBe(10);
   });
 
-  test('test user object', async () => {
-    const response = await request();
+  test('test posts endpoint', async () => {
+    const response = await requestPosts();
+    expect(typeof response).toBe('object');
+    expect(response.length).toBe(10);
+  });
+
+  test.skip('test user object', async () => {
+    const response = await requestUsers();
     const userPosition = Math.floor(Math.random() * 10);
     const user = response[userPosition];
 
