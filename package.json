@@ -1,14 +1,12 @@
 {
-  "name": "jest-nock",
+  "name": "demo-jest-nock",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Demo project to use Nock with Jest",
+  "author": "Martín M.",
+  "license": "MIT",
   "scripts": {
     "test": "jest --verbose"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "request": "^2.88.2",
     "request-promise": "^4.2.5"
