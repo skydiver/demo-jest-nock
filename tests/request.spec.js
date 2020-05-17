@@ -1,20 +1,21 @@
-const nock = require('nock');
 const { requestUsers, requestPosts } = require('../request');
 
-const logRequest = require('./nock-save-to-file');
-
-nock.recorder.rec({
-  output_objects: true,
-  logging: logRequest,
-  use_separator: false,
-});
-
-// nock('https://jsonplaceholder.typicode.com')
-//   .get('/users')
-//   .reply(200, sampleData)
-//   .persist();
+const {
+  startNockRecording,
+  storeNockRecordings,
+  playbackNockTapes,
+} = require('./nock-helpers');
 
 describe('testing using nock', () => {
+  beforeAll(() => {
+    // startNockRecording();
+    playbackNockTapes('./tape.json');
+  });
+
+  afterAll(() => {
+    // storeNockRecordings('./tape.json');
+  });
+
   test('test users endpoint', async () => {
     const response = await requestUsers();
     expect(typeof response).toBe('object');
